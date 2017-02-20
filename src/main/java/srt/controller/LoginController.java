@@ -1,5 +1,8 @@
 package srt.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,12 +30,16 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(User user){
+	public String login(User user,HttpServletResponse response){
 		if(user!=null && user.getPassword()!=null && user.getUserName()!=null){
 			User registeredUser=userRepository.getUsersByUserName(user.getUserName());
 			if(registeredUser!=null){
 				if(user.getPassword().equals(registeredUser.getPassword())){
-					return "redirect:/result?userId="+registeredUser.getUserId();
+//					return "redirect:/result?userId="+registeredUser.getUserId();
+					Cookie cookie = new Cookie("username",user.getUserName());   // 新建Cookie
+					cookie.setMaxAge(-1);           // 设置生命周期为MAX_VALUE
+					response.addCookie(cookie);                    // 输出到客户端
+					return "redirect:/work";
 				}
 			}
 		}
