@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import srt.data.domain.management.Data;
-import srt.data.domain.management.User;
 import srt.data.repository.management.SimpleUserRepositoryImpl.UserRowMapper;
 
+@Repository
 public class SimpleDataRepositoryImpl implements IDataRepository {
 
 	@Autowired
