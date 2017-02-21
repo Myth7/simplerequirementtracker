@@ -29,7 +29,7 @@ public class RegisterController {
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	public String register(User user){
 		userRepository.addUser(user);
-		return "redirect:/result/register/successful";
+		return "redirect:/login";
 	}
 	
 }

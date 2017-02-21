@@ -2,12 +2,147 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<title>work</title>
+	<meta charset="UTF-8" />
+	<title>work</title>
+	<link rel="stylesheet" type="text/css" href="/css/themes/default/easyui.css"></link>
+	<link rel="stylesheet" type="text/css" href="/css/themes/icon.css"></link>
+	<link rel="stylesheet" type="text/css" href="/css/demo.css"></link>
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
 </head>
 <body>
 	work
 	<script>alert(document.cookie)</script>
+	<h2>Custom DataGrid Pager</h2>
+	<p>You can append some buttons to the standard datagrid pager bar.</p>
+	<div style="margin:20px 0;"></div>
+	<table id="dg" title="Custom DataGrid Pager" style="width:700px;height:250px"
+			data-options="rownumbers:true,singleSelect:true,pagination:true,url:'http://127.0.0.1:8080/work/getData',method:'get'">
+		<thead>
+			<tr>
+				<th data-options="field:'dataId',width:80">Data ID</th>
+				<th data-options="field:'data1',width:100">Data1</th>
+				<th data-options="field:'data2',width:80,align:'right'">Data2</th>
+				<th data-options="field:'data3',width:80,align:'right'">Data3</th>
+				<th data-options="field:'data4',width:240">Data4</th>
+				<th data-options="field:'data5',width:60,align:'center'">Data5</th>
+			</tr>
+		</thead>
+	</table>
+	<div id="w" class="easyui-window" title="Window Layout" closed="true" data-options="iconCls:'icon-save'" style="width:500px;height:500px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+<!-- 			<div data-options="region:'east',split:true" style="width:100px"> -->
+<!-- 			</div> -->
+<!-- 			<div data-options="region:'center'" style="padding:10px;"> -->
+<!-- 				jQuery EasyUI framework help you build your web page easily. -->
+<!-- 			</div> -->
+			<div data-options="region:'center'" style="text-align:right;padding:5px 0 0;">
+<!-- 				<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:alert('ok')" style="width:80px">Ok</a> -->
+<!-- 				<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:alert('cancel')" style="width:80px">Cancel</a> -->
+				<div class="easyui-panel" title="New Topic" style="width:100%;max-width:480px;padding:30px 60px;">
+					<form th:object="${data}" method="post" id="ff" class="easyui-form" data-options="novalidate:true" style="width:400px;height:300px">
+<!-- 						<div style="margin-bottom:20px"> -->
+<!-- 							<input th:field="*{data1}" class="easyui-textbox" name="dataId" style="width:300px" data-options="label:'DataID:',required:true"></input> -->
+<!-- 						</div> -->
+						<div style="margin-bottom:20px">
+							<input th:field="*{data1}" class="easyui-textbox" name="data1" style="width:300px" data-options="label:'data1:',required:true"></input>
+						</div>
+						<div style="margin-bottom:20px">
+							<input th:field="*{data2}" class="easyui-textbox" name="data2" style="width:300px" data-options="label:'data2:',required:true"></input>
+						</div>
+						<div style="margin-bottom:20px">
+							<input th:field="*{data3}" class="easyui-textbox" name="data3" style="width:300px" data-options="label:'data3:',required:true"></input>
+						</div>
+						<div style="margin-bottom:20px">
+							<input th:field="*{data4}" class="easyui-textbox" name="data4" style="width:300px" data-options="label:'data4:',required:true"></input>
+						</div>
+						<div style="margin-bottom:20px">
+							<input th:field="*{data5}" class="easyui-textbox" name="data5" style="width:300px" data-options="label:'data5:',required:true"></input>
+						</div>
+						<br/>
+						<input type="reset" style="width:80px"></input>
+						<input type="submit" style="width:80px"></input>						
+					</form>
+<!-- 					<div style="text-align:center;padding:5px 0"> -->
+<!-- 						<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">Submit</a> -->
+<!-- 						<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">Clear</a> -->
+<!-- 					</div> -->
+<!-- 					<form th:object="${data}" method="post"> -->
+<!-- 						<label for="data1">User Name: </label> -->
+<!-- 						<input type="text" th:field="*{data1}"/> -->
+<!-- 						<br/> -->
+<!-- 						<label for="data2">User Name: </label> -->
+<!-- 						<input type="text" th:field="*{data2}"/> -->
+<!-- 						<br/> -->
+<!-- 						<label for="data3">User Name: </label> -->
+<!-- 						<input type="text" th:field="*{data3}"/> -->
+<!-- 						<br/> -->
+<!-- 						<label for="data4">User Name: </label> -->
+<!-- 						<input type="text" th:field="*{data4}"/> -->
+<!-- 						<br/> -->
+<!-- 						<label for="data5">Password: </label> -->
+<!-- 						<input type="text" th:field="*{data5}"/> -->
+<!-- 						<br/> -->
+<!-- 						<input type="reset"/> -->
+<!-- 						<input type="submit"/> -->
+<!-- 					</form> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
+			pager.pagination({
+				buttons:[{
+					iconCls:'icon-search',
+					handler:function(){
+						alert('search');
+					}
+				},{
+					iconCls:'icon-add',
+					handler:function(){
+// 						<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#w').window('open')">Open</a>
+						$('#w').window('open');
+// 						alert('add');
+					}
+				},{
+					iconCls:'icon-edit',
+					handler:function(){
+						alert('edit');
+					}
+				}]
+			});			
+		})
+	</script>
+	<script>
+		function loadTableData(){
+			$.ajax({
+				  type: 'get',
+				  url: 'work/getData',
+				  data: '',
+				  success: function(){alert('success');},
+				  dataType: 'json'
+				});
+		}
+		function submitForm(){
+			$('#ff').form('submit',{
+				onSubmit:function(){
+					submitData = $(this).form('enableValidation').form('validate');
+					$.ajax({
+						  type: 'POST',
+						  url: '/work/add',
+						  data: submitData,
+						  success: function(){alert('success');},
+						  dataType: 'json'
+						});
+				}
+			});
+		}
+		function clearForm(){
+			$('#ff').form('clear');
+		}
+	</script>
 </body>
 
 </html>

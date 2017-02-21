@@ -30,7 +30,7 @@ public class SimpleDataRepositoryImpl implements IDataRepository {
 
 	@Override
 	public List<Data> getDatasByData1(String data1, String Creator) {
-		List<Data> datas=jdbc.query(new StringBuilder(UserRowMapper.SELECT_WITH_NO_CRITERIA).append(DataRowMapper.SELECT_CRITERIA_BY_DATA1).append(DataRowMapper.SELECT_CRITERIA_BY_CREATOR).toString(), ROWMAPPER, data1, Creator);
+		List<Data> datas=jdbc.query(new StringBuilder(UserRowMapper.SELECT_WITH_NO_CRITERIA).append(DataRowMapper.SELECT_CRITERIA_BY_DATA1).append(DataRowMapper.SELECT_CRITERIA_AND_CREATOR).toString(), ROWMAPPER, data1, Creator);
 		if(datas!=null && datas.size()>0){
 			return datas;
 		}
@@ -76,7 +76,8 @@ public class SimpleDataRepositoryImpl implements IDataRepository {
 				"SELECT dataId, data1, data2, data3, data4, data5, created_by FROM Datas");
 		public static final StringBuilder SELECT_CRITERIA_BY_DATAID = new StringBuilder(" WHERE dataId=?");
 		public static final StringBuilder SELECT_CRITERIA_BY_DATA1 = new StringBuilder(" WHERE data1=?");
-		public static final StringBuilder SELECT_CRITERIA_BY_CREATOR = new StringBuilder(" AND created_by=?");
+		public static final StringBuilder SELECT_CRITERIA_BY_CREATOR = new StringBuilder(" WHERE created_by=?");
+		public static final StringBuilder SELECT_CRITERIA_AND_CREATOR = new StringBuilder(" AND created_by=?");
 		
 		public Data mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Data data = new Data();
@@ -90,5 +91,14 @@ public class SimpleDataRepositoryImpl implements IDataRepository {
 			return data;
 		}
 
+	}
+
+	@Override
+	public List<Data> getDatasByCreator(String Creator) {
+		List<Data> datas=jdbc.query(new StringBuilder(DataRowMapper.SELECT_WITH_NO_CRITERIA).append(DataRowMapper.SELECT_CRITERIA_BY_CREATOR).toString(), ROWMAPPER, Creator);
+		if(datas!=null && datas.size()>0){
+			return datas;
+		}
+		return null;
 	}
 }
